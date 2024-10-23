@@ -17,7 +17,7 @@ const { deletePost } = useContext( Postlist );
       <span  key={tag} className="badge text-bg-primary hashTag">{tag}</span>
     ))}
     <div className="alert alert-success reactions" role="alert">
-     This post has been reacted by {post.reactions} People...
+     This post has been reacted by {post.reactions.likes} People...
      </div>
   </div>
 </div>
