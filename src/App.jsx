@@ -8,7 +8,7 @@ import Postlist from "./components/Postlist"
 import Sidebar from "./components/Sidebar";
 import PostListProvider from "./store/Post-list-store";
 function App() {
-  let [ selectedTab , setSelectedTab ]=useState("Createpost");
+  let [ selectedTab , setSelectedTab ]=useState("Home");
   return (
     <PostListProvider>
     <div className="app-container">
