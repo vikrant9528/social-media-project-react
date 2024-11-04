@@ -1,4 +1,5 @@
-const Sidebar = ({selectedTab , setSelectedTab}) =>{
+import { Link } from 'react-router-dom';
+const Sidebar = () =>{
   return(
     <div className="d-flex flex-column flex-shrink-0 p-3 text-bg-dark sidebar" style={{width: "180px"}}>
     <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -7,21 +8,17 @@ const Sidebar = ({selectedTab , setSelectedTab}) =>{
     </a>
     <hr/>
     <ul className="nav nav-pills flex-column mb-auto">
-      <li className="nav-item" onClick={() => {
-        setSelectedTab("Home")
-        }}>
-        <a href="#" className={`nav-link text-white ${selectedTab === "Home" && "active"}`} aria-current="page">
+      <li>
+        <Link to="/" className="nav-link text-white" aria-current="page">
           <svg className="bi pe-none me-2" width="16" height="16"><use xlinkHref="#home"></use></svg>
           Home
-        </a>
+        </Link>
       </li>
-      <li onClick={()=>{
-        setSelectedTab("Createpost")
-        }}>
-        <a href="#" className={`nav-link text-white ${selectedTab === "Createpost" && "active"}`}>
+      <li>
+        <Link to="/create-post" className="nav-link text-white">
           <svg className="bi pe-none me-2" width="16" height="16"><use xlinkHref="#speedometer2"></use></svg>
           CreatePost
-        </a>
+        </Link>
       </li>
     </ul>
     <hr/>

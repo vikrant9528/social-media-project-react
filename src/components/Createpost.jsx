@@ -1,67 +1,58 @@
-import { useContext, useRef } from "react";
-import {Postlist} from "../store/Post-list-store";
+import { redirect } from "react-router-dom";
+import { Form} from "react-router-dom"
 
 const CreatePost = () =>{
-
-const { addPost } = useContext(Postlist)
-
-const userIdElement = useRef();
-const postTitleElement = useRef();
-const postBodyElement = useRef();
-const reactionsElement = useRef();
-const tagsElement = useRef();
-
-
-function handleSubmit(event){
- event.preventDefault();
- const userId = userIdElement.current.value;
- const postTitle = postTitleElement.current.value;
- const postBody = postBodyElement.current.value;
- const reactions = reactionsElement.current.value;
- const tags = tagsElement.current.value.split(' ')
-
- userIdElement.current.value="";
- postTitleElement.current.value="";
- postBodyElement.current.value="";
- reactionsElement.current.value="";
- tagsElement.current.value="";
-
-
- addPost(userId,postTitle,postBody,reactions,tags);
-};
-
-
+// const { addPost } = useContext(Postlist)
 return(
-  <form className="create-post" onSubmit={handleSubmit}>
+  <Form method="POST" className="create-post">
 
 <div className="mb-3">
     <label htmlFor="userId" className="form-label">Enter your user Id jhere</label>
-    <input type="text" className="form-control" id="userId" ref={userIdElement} placeholder="your user Id" />
+    <input type="text" className="form-control" id="userId" name="userId" placeholder="your user Id" />
     </div>
 
   <div className="mb-3">
     <label htmlFor="title" className="form-label">Post Title</label>
-    <input type="text" className="form-control" id="title" ref={postTitleElement} placeholder="How are you feeling today" />
+    <input type="text" className="form-control" id="title" name="title" placeholder="How are you feeling today" />
     </div>
 
     <div className="mb-3">
     <label htmlFor="body" className="form-label">Post Content</label>
-    <textarea  type="text" rows="4" className="form-control" ref={postBodyElement} id="body" placeholder="Tell us more about it" />
+    <textarea  type="text" rows="4" className="form-control" name="body" id="body" placeholder="Tell us more about it" />
     </div>
 
     <div className="mb-3">
     <label htmlFor="reactions" className="form-label">No of Reactions</label>
-    <input type="text" className="form-control" id="reactions" ref={reactionsElement} placeholder="How many people reacted to this post" />
+    <input type="text" className="form-control" id="reactions" name="reactions" placeholder="How many people reacted to this post" />
     </div>
 
     <div className="mb-3">
     <label htmlFor="tags" className="form-label">Enter your hashtags here</label>
-    <input type="text" className="form-control" id="tags" ref={tagsElement} placeholder="Please enter tags using space" />
+    <input type="text" className="form-control" id="tags" name="tags" placeholder="Please enter tags using space" />
     </div>
 
  
   <button type="submit" className="btn btn-primary">Post</button>
-</form>
+</Form>
   );
 }
+
+export async function createPostAction(data){
+  const formData = await data.request.formData();
+  const postData = Object.fromEntries(formData);
+  postData.tags = postData.tags.split(" ");
+  console.log(postData)
+  fetch('https://dummyjson.com/posts/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(postData),
+  })
+  .then(res => res.json())
+  .then((post) => { 
+    // addPost(post)
+    console.log(post);
+  });
+  return redirect("/");
+}
+
 export default CreatePost;
