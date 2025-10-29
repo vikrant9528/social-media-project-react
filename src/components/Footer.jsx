@@ -13,5 +13,6 @@ const Footer = () =>{
   </footer>
 </div>
   );
+  // footer availability is not working
 }
 export default Footer;
