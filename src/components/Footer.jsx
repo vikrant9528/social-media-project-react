@@ -15,5 +15,6 @@ const Footer = () =>{
   );
   // footer availability is not working
   // adding comments
+  //testing the git initialisation
 }
 export default Footer;
